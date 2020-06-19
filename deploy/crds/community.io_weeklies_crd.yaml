@@ -46,9 +46,17 @@ spec:
                 - url
                 type: object
               type: array
+            community_name:
+              type: string
             image_url:
               type: string
-            name:
+            tags:
+              items:
+                type: string
+              type: array
+            weekly_date:
+              type: string
+            weekly_name:
               description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                 Important: Run "operator-sdk generate k8s" to regenerate code after
                 modifying this file Add custom validation using kubebuilder tags:
@@ -56,8 +64,11 @@ spec:
               type: string
           required:
           - articles
+          - community_name
           - image_url
-          - name
+          - tags
+          - weekly_date
+          - weekly_name
           type: object
         status:
           description: WeeklyStatus defines the observed state of Weekly

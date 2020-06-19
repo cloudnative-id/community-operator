@@ -12,9 +12,12 @@ type WeeklySpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
-	Name     string         `json:"name"`
-	ImageUrl string         `json:"image_url"`
-	Articles []ArticlesSpec `json:"articles"`
+	WeeklyName    string         `json:"weekly_name"`
+	WeeklyDate    string         `json:"weekly_date"`
+	ImageUrl      string         `json:"image_url"`
+	CommunityName string         `json:"community_name"`
+	Tags          []string       `json:"tags"`
+	Articles      []ArticlesSpec `json:"articles"`
 }
 
 type ArticlesSpec struct {

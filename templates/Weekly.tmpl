@@ -1,1 +1,8 @@
-hahahaha
+*{{ .WeeklyName }}*
+*{{ .WeeklyDate }}*
+
+{{ range .Articles }}• [{{ .Type }}] [{{ .Title }}]({{ .Url }})
+{{ end }}
+
+Tags: {{ range .Tags }}#{{ . }} {{ end }}
+*{{ .CommunityName }}*

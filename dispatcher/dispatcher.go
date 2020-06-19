@@ -2,6 +2,7 @@ package dispatcher
 
 import (
 	"bytes"
+	"sort"
 	"text/template"
 
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
@@ -25,6 +26,10 @@ func (dp *Dispatcher) SendWeekly(weeklyData communityv1alpha1.WeeklySpec) {
 	if err != nil {
 		panic(err)
 	}
+
+	sort.Slice(weeklyData.Articles, func(i, j int) bool {
+		return weeklyData.Articles[i].Type < weeklyData.Articles[j].Type
+	})
 
 	err = tpl.Execute(&output, weeklyData)
 	if err != nil {

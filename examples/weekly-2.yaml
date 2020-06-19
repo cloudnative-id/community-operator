@@ -3,10 +3,17 @@ kind: Weekly
 metadata:
   name: weekly-2
 spec:
-  # Add fields here
-  name: "Kubernetes Weekly #2"
+  weekly_name: "Kubernetes Weekly #2"
+  weekly_date: 10/10/2020
+  community_name: Cloud Native Indonesia Community
+  tags:
+    - kubeweekly
+    - cncf
   image_url: https://avatars2.githubusercontent.com/u/11990726?s=460&u=824968339d334d44195b6ec544adb192de60f06a&v=4
   articles:
+  - title: Kubernetes 2
+    url: http://kubernetes.io/
+    type: News
   - title: Kubernetes 2
     url: http://kubernetes.io/
     type: Article
@@ -16,3 +23,6 @@ spec:
   - title: OpenShift 2
     url: http://kubernetes.io/
     type: News
+  - title: Kubernetes 2
+    url: http://kubernetes.io/
+    type: Article
