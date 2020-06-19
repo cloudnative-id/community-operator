@@ -8,5 +8,7 @@ spec:
   articles:
   - title: Kubernetes
     url: http://kubernetes.io/
+    type: Article
   - title: Kubernetes
     url: http://kubernetes.io/
+    type: News

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 	"runtime"
-	"strings"
+	// "strings"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
@@ -15,6 +15,7 @@ import (
 
 	"github.com/cloudnative-id/community-operator/pkg/apis"
 	"github.com/cloudnative-id/community-operator/pkg/controller"
+	"github.com/cloudnative-id/community-operator/dispatcher"
 	"github.com/cloudnative-id/community-operator/version"
 
 	"github.com/operator-framework/operator-sdk/pkg/k8sutil"
@@ -26,7 +27,7 @@ import (
 	"github.com/spf13/pflag"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
-	"sigs.k8s.io/controller-runtime/pkg/cache"
+	// "sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
@@ -42,7 +43,7 @@ var (
 var log = logf.Log.WithName("cmd")
 
 func printVersion() {
-	log.Info(fmt.Sprintf("Operator Version: %s", version.Version))
+	log.Info(fmt.Sprintf("Community Operator Version: %s", version.Version))
 	log.Info(fmt.Sprintf("Go Version: %s", runtime.Version()))
 	log.Info(fmt.Sprintf("Go OS/Arch: %s/%s", runtime.GOOS, runtime.GOARCH))
 	log.Info(fmt.Sprintf("Version of operator-sdk: %v", sdkVersion.Version))
@@ -102,10 +103,10 @@ func main() {
 	// Note that this is not intended to be used for excluding namespaces, this is better done via a Predicate
 	// Also note that you may face performance issues when using this with a high number of namespaces.
 	// More Info: https://godoc.org/github.com/kubernetes-sigs/controller-runtime/pkg/cache#MultiNamespacedCacheBuilder
-	if strings.Contains(namespace, ",") {
-		options.Namespace = ""
-		options.NewCache = cache.MultiNamespacedCacheBuilder(strings.Split(namespace, ","))
-	}
+	// if strings.Contains(namespace, ",") {
+	// 	options.Namespace = namespace
+	// 	options.NewCache = cache.MultiNamespacedCacheBuilder(strings.Split(namespace, ","))
+	// }
 
 	// Create a new manager to provide shared dependencies and start components
 	mgr, err := manager.New(cfg, options)
@@ -127,6 +128,13 @@ func main() {
 		log.Error(err, "")
 		os.Exit(1)
 	}
+
+	disp := dispatcher.Dispatcher{
+		A: 5,
+		B: 10,
+	}
+
+	controller.AddToDispatcher(disp)
 
 	// Add the Metrics Service
 	addMetrics(ctx, cfg)

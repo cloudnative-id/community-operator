@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cloudnative-id/community-operator/dispatcher"
+
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
 	// corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -26,10 +28,15 @@ var log = logf.Log.WithName("controller_weekly")
 * USER ACTION REQUIRED: This is a scaffold file intended for the user to modify with their own Controller
 * business logic.  Delete these comments after modifying this file.*
  */
+func AddDispatcher(disp dispatcher.Dispatcher) {
+	dispatcher := disp
+	dispatcher.DemoMethod(5)
+	dispatcher.Telegram()
+}
 
 // Add creates a new Weekly Controller and adds it to the Manager. The Manager will set fields on the Controller
 // and Start it when the Manager is Started.
-func Add(mgr manager.Manager) error {
+func AddManager(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
 }
 

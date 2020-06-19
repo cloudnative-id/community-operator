@@ -36,10 +36,13 @@ spec:
                 properties:
                   title:
                     type: string
+                  type:
+                    type: string
                   url:
                     type: string
                 required:
                 - title
+                - type
                 - url
                 type: object
               type: array

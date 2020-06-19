@@ -19,6 +19,7 @@ type WeeklySpec struct {
 type ArticlesSpec struct {
 	Title string `json:"title"`
 	URL string `json:"url"`
+	Type string `json:"type"`
 }
 
 
