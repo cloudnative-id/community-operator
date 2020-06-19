@@ -1,0 +1,21 @@
+apiVersion: community.io/v1alpha1
+kind: Weekly
+metadata:
+  name: weekly-1
+spec:
+  # Add fields here
+  name: "Kubernetes Weekly #1"
+  image_url: https://avatars2.githubusercontent.com/u/11990726?s=460&u=824968339d334d44195b6ec544adb192de60f06a&v=4
+  articles:
+  - title: Kubernetes 1
+    url: http://kubernetes.io/
+    type: Article
+  - title: Kubernetes 1
+    url: http://kubernetes.io/
+    type: News
+  - title: OpenShift 1
+    url: http://kubernetes.io/
+    type: News
+  - title: OpenShift 1
+    url: http://kubernetes.io/
+    type: News

@@ -7,15 +7,16 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+
 	// "strings"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 	"k8s.io/client-go/rest"
 
+	"github.com/cloudnative-id/community-operator/dispatcher"
 	"github.com/cloudnative-id/community-operator/pkg/apis"
 	"github.com/cloudnative-id/community-operator/pkg/controller"
-	"github.com/cloudnative-id/community-operator/dispatcher"
 	"github.com/cloudnative-id/community-operator/version"
 
 	"github.com/operator-framework/operator-sdk/pkg/k8sutil"
@@ -27,6 +28,7 @@ import (
 	"github.com/spf13/pflag"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
+
 	// "sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
@@ -129,11 +131,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	disp := dispatcher.Dispatcher{
-		A: 5,
-		B: 10,
-	}
+	// setup dispatcher
+	disp := dispatcher.Dispatcher{}
+	disp.Start()
 
+	// add dispatcher to controller
 	controller.AddToDispatcher(disp)
 
 	// Add the Metrics Service

@@ -2,19 +2,15 @@ package weekly
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cloudnative-id/community-operator/dispatcher"
 
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
-	// corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
-	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	// "k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
-	// "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
@@ -23,18 +19,14 @@ import (
 )
 
 var log = logf.Log.WithName("controller_weekly")
+var dispatcherController dispatcher.Dispatcher
 
-/**
-* USER ACTION REQUIRED: This is a scaffold file intended for the user to modify with their own Controller
-* business logic.  Delete these comments after modifying this file.*
- */
+// Create dispatcherController and adds it to the Manager. The Manager will set the dispacherController when the Manager is Started.
 func AddDispatcher(disp dispatcher.Dispatcher) {
-	dispatcher := disp
-	dispatcher.DemoMethod(5)
-	dispatcher.Telegram()
+	dispatcherController = disp
 }
 
-// Add creates a new Weekly Controller and adds it to the Manager. The Manager will set fields on the Controller
+// AddManager creates a new Weekly Controller and adds it to the Manager. The Manager will set fields on the Controller
 // and Start it when the Manager is Started.
 func AddManager(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
@@ -59,16 +51,6 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 		return err
 	}
 
-	// TODO(user): Modify this to be the types you create that are owned by the primary resource
-	// Watch for changes to secondary resource Pods and requeue the owner Weekly
-	// err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestForOwner{
-	// 	IsController: true,
-	// 	OwnerType:    &communityv1alpha1.Weekly{},
-	// })
-	// if err != nil {
-	// 	return err
-	// }
-
 	return nil
 }
 
@@ -77,90 +59,47 @@ var _ reconcile.Reconciler = &ReconcileWeekly{}
 
 // ReconcileWeekly reconciles a Weekly object
 type ReconcileWeekly struct {
-	// This client, initialized using mgr.Client() above, is a split client
-	// that reads objects from the cache and writes to the apiserver
 	client client.Client
 	scheme *runtime.Scheme
 }
 
-// Reconcile reads that state of the cluster for a Weekly object and makes changes based on the state read
+// Reconcile reads that state of the cluster for a Weekly object and makes changes based on the status send
 // and what is in the Weekly.Spec
-// TODO(user): Modify this Reconcile function to implement your Controller logic.  This example creates
-// a Pod as an example
-// Note:
-// The Controller will requeue the Request to be processed again if the returned error is non-nil or
-// Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
 func (r *ReconcileWeekly) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
 	reqLogger.Info("Reconciling Weekly")
 
-	// Fetch the Weekly instance
-	instance := &communityv1alpha1.Weekly{}
-	err := r.client.Get(context.TODO(), request.NamespacedName, instance)
+	// Fetch the weekly
+	weekly := &communityv1alpha1.Weekly{}
+
+	// Populate weekly
+	err := r.client.Get(context.TODO(), request.NamespacedName, weekly)
+
 	if err != nil {
 		if errors.IsNotFound(err) {
-			// Request object not found, could have been deleted after reconcile request.
-			// Owned objects are automatically garbage collected. For additional cleanup logic use finalizers.
-			// Return and don't requeue
+			reqLogger.Info("Weekly resource not found. Ignoring since object must be deleted.")
 			return reconcile.Result{}, nil
 		}
-		// Error reading the object - requeue the request.
+		reqLogger.Error(err, "Failed to get Weekly.")
 		return reconcile.Result{}, err
 	}
 
-	fmt.Println(instance.Name)
-	fmt.Println(instance.Namespace)
-	fmt.Println(instance.Kind)
-	fmt.Println(instance.Spec)
+	// Send Weekly to dispatcher based on status
+	if weekly.Status.Send {
+		reqLogger.Info("Weekly resource status send is True. Ignoring send to dispacher.")
+		return reconcile.Result{}, nil
+	} else {
+		reqLogger.Info("Weekly resource status send is False. Send to dispacher.")
+		dispatcherController.SendWeekly(weekly.Spec)
 
-	// Define a new Pod object
-	// pod := newPodForCR(instance)
+		// Update status.Send
+		weekly.Status.Send = true
+		err := r.client.Status().Update(context.TODO(), weekly)
+		if err != nil {
+			reqLogger.Error(err, "Failed to update Weekly status")
+			return reconcile.Result{}, err
+		}
+	}
 
-	// Set Weekly instance as the owner and controller
-	// if err := controllerutil.SetControllerReference(instance, pod, r.scheme); err != nil {
-	// 	return reconcile.Result{}, err
-	// }
-
-	// Check if this Pod already exists
-	// found := &corev1.Pod{}
-	// err = r.client.Get(context.TODO(), types.NamespacedName{Name: pod.Name, Namespace: pod.Namespace}, found)
-	// if err != nil && errors.IsNotFound(err) {
-	// 	reqLogger.Info("Creating a new Pod", "Pod.Namespace", pod.Namespace, "Pod.Name", pod.Name)
-	// 	err = r.client.Create(context.TODO(), pod)
-	// 	if err != nil {
-	// 		return reconcile.Result{}, err
-	// 	}
-
-	// 	// Pod created successfully - don't requeue
-	// 	return reconcile.Result{}, nil
-	// } else if err != nil {
-	// 	return reconcile.Result{}, err
-	// }
-
-	// Pod already exists - don't requeue
-	// reqLogger.Info("Skip reconcile: Pod already exists", "Pod.Namespace", found.Namespace, "Pod.Name", found.Name)
 	return reconcile.Result{}, nil
 }
-
-// newPodForCR returns a busybox pod with the same name/namespace as the cr
-// func newPodForCR(cr *communityv1alpha1.Weekly) *corev1.Pod {
-// 	labels := map[string]string{
-// 		"app": cr.Name,
-// 	}
-// 	return &corev1.Pod{
-// 		ObjectMeta: metav1.ObjectMeta{
-// 			Name:      cr.Name + "-pod",
-// 			Namespace: cr.Namespace,
-// 			Labels:    labels,
-// 		},
-// 		Spec: corev1.PodSpec{
-// 			Containers: []corev1.Container{
-// 				{
-// 					Name:    "busybox",
-// 					Image:   "busybox",
-// 					Command: []string{"sleep", "3600"},
-// 				},
-// 			},
-// 		},
-// 	}
-// }

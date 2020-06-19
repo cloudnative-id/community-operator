@@ -1,18 +1,36 @@
 package dispatcher
 
 import (
-	"fmt"
+	"bytes"
+	"text/template"
+
+	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
 )
 
 type Dispatcher struct {
-    A int
-    B int
+	telegramDispatcher TelegramDispatcher
 }
 
-func (db *Dispatcher) DemoMethod(x int) {
-    y:= db.A + db.B + x
-    fmt.Println(y)
+func (dp *Dispatcher) Start() {
+	dp.telegramDispatcher.Start()
 }
-func (db *Dispatcher) Telegram() {
-	fmt.Println("jhaha")
+
+func (dp *Dispatcher) SendWeekly(weeklyData communityv1alpha1.WeeklySpec) {
+	var tmpl string
+	var output bytes.Buffer
+
+	tmpl = "templates/Weekly.tmpl"
+
+	tpl, err := template.ParseFiles(tmpl)
+	if err != nil {
+		panic(err)
+	}
+
+	err = tpl.Execute(&output, weeklyData)
+	if err != nil {
+		panic(err)
+	}
+
+	dp.telegramDispatcher.SendMessage(output)
+	dp.telegramDispatcher.SendImage(weeklyData.ImageUrl)
 }

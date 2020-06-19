@@ -12,19 +12,20 @@ type WeeklySpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
-	Name string `json:"name"`
+	Name     string         `json:"name"`
+	ImageUrl string         `json:"image_url"`
 	Articles []ArticlesSpec `json:"articles"`
 }
 
 type ArticlesSpec struct {
 	Title string `json:"title"`
-	URL string `json:"url"`
-	Type string `json:"type"`
+	Url   string `json:"url"`
+	Type  string `json:"type"`
 }
-
 
 // WeeklyStatus defines the observed state of Weekly
 type WeeklyStatus struct {
+	Send bool `json:"send"`
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html

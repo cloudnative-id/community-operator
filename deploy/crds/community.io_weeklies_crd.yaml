@@ -46,6 +46,8 @@ spec:
                 - url
                 type: object
               type: array
+            image_url:
+              type: string
             name:
               description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                 Important: Run "operator-sdk generate k8s" to regenerate code after
@@ -54,10 +56,16 @@ spec:
               type: string
           required:
           - articles
+          - image_url
           - name
           type: object
         status:
           description: WeeklyStatus defines the observed state of Weekly
+          properties:
+            send:
+              type: boolean
+          required:
+          - send
           type: object
       type: object
   version: v1alpha1
