@@ -11,6 +11,7 @@ WIP
 - [x] telegram dispatcher
 - [ ] twitter dispatcher
 - [ ] facebook dispatcher
+- [x] helm chart
 
 ### Developing community-operator
 This operator build based on [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/), to build this operator, you need [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/).
@@ -31,6 +32,17 @@ operator-sdk run local
 ```
 - deploy some example weekly
 ```
-kubectl apply -f examples/
+kubectl apply -f examples/weekly/
 ```
 
+#### Building community-operator
+To build community-operator image, you can use community-operator from root of the project
+```
+operator-sdk build cloudnativeid/community-operator:0.0.1
+```
+
+#### Installing community-operator via helm
+Please read README.md in charts folder for more information.
+```
+helm install ./charts --name-template community-operator --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
+```

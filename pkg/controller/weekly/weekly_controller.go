@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/cloudnative-id/community-operator/dispatcher"
-
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
+
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"

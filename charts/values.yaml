@@ -1,0 +1,15 @@
+operator:
+  # image of community-operator
+  image: "cloudnativeid/community-operator"
+  # tag of communoty-operator image
+  tag: "0.0.1"
+  # pullPolicy for operator image
+  pullPolicy: "Always"
+  # number of replica for deployment
+  replica: 3
+
+telegram:
+  # fill with your group chat_id
+  chatid: "-0101234"
+  # fill with your bot token
+  token: "123456789:asd43gpPasd1asdasdbdzwelolqthaha-weqMy"

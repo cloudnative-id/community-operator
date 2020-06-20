@@ -8,8 +8,6 @@ import (
 	"os"
 	"runtime"
 
-	// "strings"
-
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 	"k8s.io/client-go/rest"
@@ -29,7 +27,6 @@ import (
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
-	// "sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
@@ -88,6 +85,7 @@ func main() {
 	}
 
 	ctx := context.TODO()
+
 	// Become the leader before proceeding
 	err = leader.Become(ctx, "community-operator-lock")
 	if err != nil {
