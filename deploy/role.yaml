@@ -70,6 +70,7 @@ rules:
   - community.io
   resources:
   - '*'
+  - meetups
   verbs:
   - create
   - delete

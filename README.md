@@ -7,7 +7,7 @@ WIP
 ### Feature
 - [x] weekly controller
 - [ ] information controller
-- [ ] meetup controller
+- [x] meetup controller
 - [x] telegram dispatcher
 - [ ] twitter dispatcher
 - [ ] facebook dispatcher
@@ -25,14 +25,16 @@ export TELEGRAM_CHATID=yyy
 - deploy CRDs
 ```
 kubectl apply -f deploy/crds/community.io_weeklies_crd.yaml
+kubectl apply -f deploy/crds/community.io_meetups_crd.yaml
 ```
 - run community-operator locally
 ```
 operator-sdk run local
 ```
-- deploy some example weekly
+- deploy some example
 ```
-kubectl apply -f examples/weekly/
+kubectl apply -f examples/weekly/example.yaml
+kubectl apply -f examples/meetup/example.yaml
 ```
 
 #### Building community-operator

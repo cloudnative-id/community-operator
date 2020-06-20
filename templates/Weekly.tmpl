@@ -1,8 +1,8 @@
-*{{ .WeeklyName }}*
-*{{ .WeeklyDate }}*
+*{{ .Name }}*
+*{{ .Date }}*
 
 {{ range .Articles }}• [{{ .Type }}] [{{ .Title }}]({{ .Url }})
 {{ end }}
 
 Tags: {{ range .Tags }}#{{ . }} {{ end }}
-*{{ .CommunityName }}*
+*{{ .Community }}*

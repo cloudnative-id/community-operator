@@ -37,5 +37,25 @@ func (dp *Dispatcher) SendWeekly(weeklyData communityv1alpha1.WeeklySpec) {
 	}
 
 	dp.telegramDispatcher.SendMessage(output)
-	dp.telegramDispatcher.SendImage(weeklyData.ImageUrl)
+	dp.telegramDispatcher.SendImage(weeklyData.Image)
+}
+
+func (dp *Dispatcher) SendMeetup(meetupData communityv1alpha1.MeetupSpec) {
+	var tmpl string
+	var output bytes.Buffer
+
+	tmpl = "templates/Meetup.tmpl"
+
+	tpl, err := template.ParseFiles(tmpl)
+	if err != nil {
+		panic(err)
+	}
+
+	err = tpl.Execute(&output, meetupData)
+	if err != nil {
+		panic(err)
+	}
+
+	dp.telegramDispatcher.SendMessage(output)
+	dp.telegramDispatcher.SendImage(meetupData.Image)
 }

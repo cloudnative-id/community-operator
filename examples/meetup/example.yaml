@@ -1,0 +1,25 @@
+apiVersion: community.io/v1alpha1
+kind: Meetup
+metadata:
+  name: jakarta-14
+spec:
+  name: "Jakarta Kubernetes Online Meetup #14"
+  date: "April 25, 2020"
+  time: "14:00"
+  place: "Online"
+  city: "Jakarta"
+  sponsor: "Cloud Native Computing Foundation"
+  registration_url: "bit.ly/jk8s-id-apr2020"
+  image: "https://raw.githubusercontent.com/cloudnative-id/announcer-system/master/resources/new-meetup/meetup/picture/jakarta14.png"
+  tags:
+    - meetup
+    - cncf
+  speakers:
+    - name: "Iqbal Syamil"
+      position: "Student"
+      company: "Telkom University"
+      title: "Understanding Core Concepts of Kubernetes"
+    - name: "Aris Cahyadi Risdianto"
+      position: "Ambassador"
+      company: "Open Networking Foundation"
+      title: "Intro to SONA CNI for Kubernetes Networking"

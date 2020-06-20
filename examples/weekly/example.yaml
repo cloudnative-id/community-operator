@@ -1,0 +1,94 @@
+apiVersion: community.io/v1alpha1
+kind: Weekly
+metadata:
+  name: weekly-196
+spec:
+  name: "kubeweekly #196"
+  date: 12/13/2019
+  community: Cloud Native Indonesia Community
+  tags:
+    - kubeweekly
+    - cncf
+  image: https://raw.githubusercontent.com/cloudnative-id/artwork/master/logos/cloud-native-indonesia-text.png
+  articles:
+    - title: "What&#x2019;s New in Kubernetes 1.17: A Deeper Look at New Features"
+      url: >-
+        https://www.stackrox.com/post/2019/12/whats-new-in-kubernetes-1.17-a-deeper-look-at-new-features/
+      type: technical
+    - title: How to Export Kubernetes Events for Observability and Alerting
+      url: >-
+        https://engineering.opsgenie.com/how-to-export-kubernetes-events-for-observability-and-alerting-a9b4a953363d
+      type: technical
+    - title: Security release of Envoy 1.12.2 is now available
+      url: "https://groups.google.com/forum/#!topic/envoy-announce/BjgUTDTKAu8"
+      type: technical
+    - title: "Week Ending December 8, 2019"
+      url: "http://lwkd.info/2019/20191209"
+      type: technical
+    - title: Creating Custom Kubernetes Operators
+      url: "https://www.magalix.com/blog/creating-custom-kubernetes-operators"
+      type: technical
+    - title: OPA Summit 2019
+      url: "https://blog.openpolicyagent.org/kubecon-us-2019-recap-3e60c70d633a"
+      type: technical
+    - title: >-
+        Demystifying Kubernetes as a Service &#x2013; How Alibaba Cloud Manages
+        10,000s of Kubernetes Clusters
+      url: >-
+        https://www.cncf.io/blog/2019/12/12/demystifying-kubernetes-as-a-service-how-does-alibaba-cloud-manage-10000s-of-kubernetes-clusters/
+      type: technical
+    - title: Building Large Kubernetes Clusters
+      url: >-
+        https://engineering.linecorp.com/en/blog/building-large-kubernetes-clusters/
+      type: editorial
+    - title: "Primer: Understanding Software and System Architecture"
+      url: >-
+        https://thenewstack.io/primer-understanding-software-and-system-architecture/
+      type: editorial
+    - title: "Primer: Understanding the Cloud Native Impact on Architecture"
+      url: >-
+        https://thenewstack.io/primer-understanding-the-cloud-native-impact-on-architecture/
+      type: editorial
+    - title: How Enterprises Could Use Data Centers to Be Their Own 5G Providers
+      url: >-
+        https://www.datacenterknowledge.com/networks/how-enterprises-could-one-day-use-their-data-centers-be-their-own-5g-providers
+      type: editorial
+    - title: The Top 3 Service Mesh Developments in 2020
+      url: "https://thenewstack.io/the-top-3-service-mesh-developments-in-2020/"
+      type: editorial
+    - title: Introduction to Kuma
+      url: "https://jaxenter.com/kuma-service-mesh-164281.html"
+      type: editorial
+    - title: From Data-Centre to the Cloud
+      url: >-
+        https://www.weave.works/blog/key-drivers-migrating-from-data-centre-to-cloud
+      type: editorial
+    - title: >-
+        FIDEKS &#x2013; GitOps driven &#x201C;Augmented K8S Platform for
+        Enterprise&#x201D;
+      url: "https://www.weave.works/blog/gitops-driven-fidelity-fideks"
+      type: editorial
+    - title: "Kubernetes: It&#x2019;s Not Easy but What&#x2019;s to Come?"
+      url: "https://thenewstack.io/kubernetes-its-not-easy-but-whats-to-come/"
+      type: editorial
+    - title: "AutoTiKV: TiKV Tuning Made Easy by AI and Machine Learning"
+      url: >-
+        https://www.cncf.io/blog/2019/12/10/autotikv-tikv-tuning-made-easy-by-ai-and-machine-learning/
+      type: editorial
+    - title: Kubernetes 1.17
+      url: >-
+        https://kubernetes.io/blog/2019/12/09/kubernetes-1-17-release-announcement/
+      type: headlines
+    - title: "Kubernetes 1.17 Feature: Kubernetes Volume Snapshot Moves to Beta"
+      url: >-
+        https://kubernetes.io/blog/2019/12/09/kubernetes-1-17-feature-cis-volume-snapshot-beta/
+      type: headlines
+    - title: >-
+        Kubernetes 1.17 Feature: Kubernetes In-Tree to CSI Volume Migration Moves to Beta
+      url: >-
+        https://kubernetes.io/blog/2019/12/09/kubernetes-1-17-feature-csi-migration-beta/
+      type: headlines
+    - title: >-
+        Kubernetes 1.17, with Guinevere Saenger
+      url: "https://kubernetespodcast.com/episode/083-kubernetes-1.17/"
+      type: headlines

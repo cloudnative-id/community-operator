@@ -7,27 +7,32 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// WeeklySpec defines the desired state of Weekly
-type WeeklySpec struct {
+// MeetupSpec defines the desired state of Meetup
+type MeetupSpec struct {
+	Name            string        `json:"name"`
+	Date            string        `json:"date"`
+	Time            string        `json:"time"`
+	Place           string        `json:"place"`
+	City            string        `json:"city"`
+	Sponsor         string        `json:"sponsor"`
+	RegistrationURL string        `json:"registration_url"`
+	Image           string        `json:"image"`
+	Tags            []string      `json:"tags"`
+	Speakers        []SpeakerSpec `json:"speakers"`
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html
-	Name      string        `json:"name"`
-	Date      string        `json:"date"`
-	Image     string        `json:"image"`
-	Community string        `json:"community"`
-	Tags      []string      `json:"tags"`
-	Articles  []ArticleSpec `json:"articles"`
 }
 
-type ArticleSpec struct {
-	Title string `json:"title"`
-	Url   string `json:"url"`
-	Type  string `json:"type"`
+type SpeakerSpec struct {
+	Name     string `json:"name"`
+	Position string `json:"position"`
+	Company  string `json:"company"`
+	Title    string `json:"title"`
 }
 
-// WeeklyStatus defines the observed state of Weekly
-type WeeklyStatus struct {
+// MeetupStatus defines the observed state of Meetup
+type MeetupStatus struct {
 	Send bool `json:"send"`
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
@@ -36,26 +41,26 @@ type WeeklyStatus struct {
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// Weekly is the Schema for the weeklies API
+// Meetup is the Schema for the meetups API
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:path=weeklies,scope=Namespaced
-type Weekly struct {
+// +kubebuilder:resource:path=meetups,scope=Namespaced
+type Meetup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   WeeklySpec   `json:"spec,omitempty"`
-	Status WeeklyStatus `json:"status,omitempty"`
+	Spec   MeetupSpec   `json:"spec,omitempty"`
+	Status MeetupStatus `json:"status,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// WeeklyList contains a list of Weekly
-type WeeklyList struct {
+// MeetupList contains a list of Meetup
+type MeetupList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Weekly `json:"items"`
+	Items           []Meetup `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&Weekly{}, &WeeklyList{})
+	SchemeBuilder.Register(&Meetup{}, &MeetupList{})
 }
