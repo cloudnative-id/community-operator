@@ -2,7 +2,7 @@ operator:
   # image of community-operator
   image: "cloudnativeid/community-operator"
   # tag of communoty-operator image
-  tag: "0.0.2"
+  tag: "0.0.3"
   # pullPolicy for operator image
   pullPolicy: "Always"
   # number of replica for deployment

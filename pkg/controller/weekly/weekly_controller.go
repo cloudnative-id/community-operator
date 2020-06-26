@@ -2,7 +2,6 @@ package weekly
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cloudnative-id/community-operator/dispatcher"
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
@@ -73,7 +72,6 @@ func (r *ReconcileWeekly) Reconcile(request reconcile.Request) (reconcile.Result
 
 	// Populate weekly
 	err := r.client.Get(context.TODO(), request.NamespacedName, weekly)
-	fmt.Println(weekly.Spec)
 
 	if err != nil {
 		if errors.IsNotFound(err) {

@@ -36,14 +36,18 @@ func (t *TelegramDispatcher) Start() {
 	}
 }
 
-func (t *TelegramDispatcher) SendMessage(output bytes.Buffer) {
+func (t *TelegramDispatcher) SendMessage(output bytes.Buffer) error {
 	t.Msg = tgbotapi.NewMessage(int64(t.ChatID), output.String())
 	t.Msg.ParseMode = "markdown"
 	t.Msg.DisableWebPagePreview = true
-	t.Bot.Send(t.Msg)
+
+	_, e := t.Bot.Send(t.Msg)
+	return e
 }
 
-func (t *TelegramDispatcher) SendImage(url string) {
+func (t *TelegramDispatcher) SendImage(url string) error {
 	t.Pic = tgbotapi.NewPhotoShare(int64(t.ChatID), url)
-	t.Bot.Send(t.Pic)
+
+	_, e := t.Bot.Send(t.Pic)
+	return e
 }

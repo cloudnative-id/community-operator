@@ -1,0 +1,19 @@
+apiVersion: community.io/v1alpha1
+kind: Announcement
+metadata:
+  name: announcement-1
+spec:
+  title: "community-operator release!"
+  community: Cloud Native Indonesia Community 
+  message: >-
+    We happy to release community-operator!
+
+
+    The Community Operator provides Kubernetes native deployment and management of your community. The purpose of this project is to simplify and automate community management in top of Kubernetes clusters.
+
+
+    Checkout in https://github.com/cloudnative-id/community-operator
+  image: https://raw.githubusercontent.com/cloudnative-id/artwork/master/logos/cloud-native-indonesia-text.png
+  tags:
+    - announcement
+    - cncf

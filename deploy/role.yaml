@@ -71,6 +71,7 @@ rules:
   resources:
   - '*'
   - meetups
+  - announcements
   verbs:
   - create
   - delete

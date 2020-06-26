@@ -36,8 +36,15 @@ func (dp *Dispatcher) SendWeekly(weeklyData communityv1alpha1.WeeklySpec) {
 		panic(err)
 	}
 
-	dp.telegramDispatcher.SendMessage(output)
-	dp.telegramDispatcher.SendImage(weeklyData.Image)
+	err = dp.telegramDispatcher.SendMessage(output)
+	if err != nil {
+		panic(err)
+	}
+
+	err = dp.telegramDispatcher.SendImage(weeklyData.Image)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func (dp *Dispatcher) SendMeetup(meetupData communityv1alpha1.MeetupSpec) {
@@ -56,6 +63,40 @@ func (dp *Dispatcher) SendMeetup(meetupData communityv1alpha1.MeetupSpec) {
 		panic(err)
 	}
 
-	dp.telegramDispatcher.SendMessage(output)
-	dp.telegramDispatcher.SendImage(meetupData.Image)
+	err = dp.telegramDispatcher.SendMessage(output)
+	if err != nil {
+		panic(err)
+	}
+
+	err = dp.telegramDispatcher.SendImage(meetupData.Image)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (dp *Dispatcher) SendAnnouncement(announcementData communityv1alpha1.AnnouncementSpec) {
+	var tmpl string
+	var output bytes.Buffer
+
+	tmpl = "templates/Announcement.tmpl"
+
+	tpl, err := template.ParseFiles(tmpl)
+	if err != nil {
+		panic(err)
+	}
+
+	err = tpl.Execute(&output, announcementData)
+	if err != nil {
+		panic(err)
+	}
+
+	err = dp.telegramDispatcher.SendMessage(output)
+	if err != nil {
+		panic(err)
+	}
+
+	err = dp.telegramDispatcher.SendImage(announcementData.Image)
+	if err != nil {
+		panic(err)
+	}
 }

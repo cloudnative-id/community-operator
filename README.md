@@ -1,20 +1,25 @@
 # community-operator
 The Community Operator provides Kubernetes native deployment and management of your community. The purpose of this project is to simplify and automate community management in top of Kubernetes clusters.
 
-### Design Decision
-WIP
-
 ### Feature
-- [x] weekly controller
-- [ ] information controller
-- [x] meetup controller
+#### API
+- [x] weekly API & controller
+- [x] announcement API & controller
+- [x] meetup API & controller
+
+#### Dispatcher
 - [x] telegram dispatcher
+- [ ] support for multiple telegram dispatcher
 - [ ] twitter dispatcher
+- [ ] support for multiple twitter dispatcher
 - [ ] facebook dispatcher
+- [ ] support for multiple facebook dispatcher
+
+#### Installation
 - [x] helm chart
 
 ### Developing community-operator
-This operator build based on [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/), to build this operator, you need [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/).
+This operator build based on [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/). To build this operator, you need [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/).
 
 #### Running community-operator
 - export variable need for community-operator
@@ -47,4 +52,9 @@ operator-sdk build cloudnativeid/community-operator:0.0.1
 Please read README.md in charts folder for more information.
 ```
 helm install ./charts --name-template community-operator --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
+```
+
+to upgrade
+```
+helm upgrade community-operator ./charts --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
 ```
