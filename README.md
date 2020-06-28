@@ -54,6 +54,11 @@ Please read README.md in charts folder for more information.
 helm install ./charts --name-template community-operator --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
 ```
 
+to insatall without crds
+```
+--skip-crds
+```
+
 to upgrade
 ```
 helm upgrade community-operator ./charts --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
