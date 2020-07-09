@@ -1,6 +1,8 @@
 # community-operator
 The Community Operator provides Kubernetes native deployment and management of your community. The purpose of this project is to simplify and automate community management in top of Kubernetes clusters.
 
+Community-operator currently watch CRDs on the same namespace as the community-operator deployed.
+
 ### Feature
 #### API
 - [x] weekly API & controller
@@ -17,6 +19,9 @@ The Community Operator provides Kubernetes native deployment and management of y
 
 #### Installation
 - [x] helm chart
+
+#### Other
+- [ ] support multi namespace CRDs
 
 ### Developing community-operator
 This operator build based on [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/). To build this operator, you need [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/).
