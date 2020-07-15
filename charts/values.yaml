@@ -2,14 +2,28 @@ operator:
   # image of community-operator
   image: "cloudnativeid/community-operator"
   # tag of communoty-operator image
-  tag: "0.0.3"
+  tag: "0.0.4"
   # pullPolicy for operator image
   pullPolicy: "Always"
   # number of replica for deployment
   replica: 3
 
 telegram:
+  # set telegram bot is enabled or not
+  enabled: true
   # fill with your group chat_id
   chatid: "-0101234"
   # fill with your bot token
   token: "123456789:asd43gpPasd1asdasdbdzwelolqthaha-weqMy"
+
+twitter:
+  # set twitter bot is enabled or not
+  enabled: true
+  # fill with your API_KEY
+  api_key: "-0101234"
+  # fill with your API_SECRET_KEY
+  api_secret_key: "-0101234"
+  # fill with your ACCESS_TOKEN
+  access_token: "-0101234"
+  # fill with your ACCESS_TOKEN_SECRET
+  access_token_secret: "-0101234"

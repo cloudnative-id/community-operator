@@ -12,7 +12,7 @@ Community-operator currently watch CRDs on the same namespace as the community-o
 #### Dispatcher
 - [x] telegram dispatcher
 - [ ] support for multiple telegram dispatcher
-- [ ] twitter dispatcher
+- [x] twitter dispatcher
 - [ ] support for multiple twitter dispatcher
 - [ ] facebook dispatcher
 - [ ] support for multiple facebook dispatcher
@@ -29,13 +29,20 @@ This operator build based on [operator-sdk](https://sdk.operatorframework.io/doc
 #### Running community-operator
 - export variable need for community-operator
 ```
+export TELEGRAM_ENABLED="true"
 export TELEGRAM_TOKEN=xxx
 export TELEGRAM_CHATID=yyy
+export TWITTER_ENABLED="true"
+export TWITTER_API_KEY=xxx
+export TWITTER_API_SECRET_KEY=yyy
+export TWITTER_ACCESS_TOKEN=xxx
+export TWITTER_ACCESS_TOKEN_SECRET=yyy
 ```
 - deploy CRDs
 ```
 kubectl apply -f deploy/crds/community.io_weeklies_crd.yaml
 kubectl apply -f deploy/crds/community.io_meetups_crd.yaml
+kubectl apply -f deploy/crds/community.io_announcements_crd.yaml
 ```
 - run community-operator locally
 ```
@@ -50,13 +57,13 @@ kubectl apply -f examples/meetup/example.yaml
 #### Building community-operator
 To build community-operator image, you can use community-operator from root of the project
 ```
-operator-sdk build cloudnativeid/community-operator:0.0.1
+operator-sdk build cloudnativeid/community-operator:0.0.x
 ```
 
 #### Installing community-operator via helm
 Please read README.md in charts folder for more information.
 ```
-helm install ./charts --name-template community-operator --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
+helm install ./charts --name-template community-operator --set-string telegram.chatid="xx" --set-string telegram.token="yy"
 ```
 
 to insatall without crds
@@ -66,5 +73,5 @@ to insatall without crds
 
 to upgrade
 ```
-helm upgrade community-operator ./charts --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
+helm upgrade community-operator ./charts --set-string telegram.chatid="xx" --set-string telegram.token="yy"
 ```
