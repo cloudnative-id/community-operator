@@ -12,7 +12,7 @@ Community-operator currently watch CRDs on the same namespace as the community-o
 #### Dispatcher
 - [x] telegram dispatcher
 - [ ] support for multiple telegram dispatcher
-- [ ] twitter dispatcher
+- [x] twitter dispatcher
 - [ ] support for multiple twitter dispatcher
 - [ ] facebook dispatcher
 - [ ] support for multiple facebook dispatcher
