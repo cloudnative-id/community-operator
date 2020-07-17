@@ -75,3 +75,11 @@ to upgrade
 ```
 helm upgrade community-operator ./charts --set-string telegram.chatid="xx" --set-string telegram.token="yy"
 ```
+
+#### Community list
+This is the community list that used community-operator
+- Kubernetes & Cloud Native Indonesia (full implementation)
+- Ruby Indonesia (weekly)
+- Golang Indonesia (weekly)
+- DevOps Indonesia (weekly)
+- NodeJS Indonesia (weekly)
