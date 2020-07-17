@@ -2,6 +2,7 @@ package weekly
 
 import (
 	"context"
+	"time"
 
 	"github.com/cloudnative-id/community-operator/dispatcher"
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
@@ -89,6 +90,8 @@ func (r *ReconcileWeekly) Reconcile(request reconcile.Request) (reconcile.Result
 	} else {
 		reqLogger.Info("Weekly resource status send is False. Send to dispacher.")
 		dispatcherController.SendWeekly(weekly.Spec)
+
+		time.Sleep(10 * time.Second)
 
 		// Update status.Send
 		weekly.Status.Send = true

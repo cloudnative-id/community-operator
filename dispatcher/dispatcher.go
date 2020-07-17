@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
+	"time"
 
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
 )
@@ -51,6 +52,8 @@ func (dp *Dispatcher) sendTelegram(message bytes.Buffer, picture string) {
 		panic(err)
 	}
 
+	time.Sleep(10 * time.Second)
+
 	_, err = dp.telegramDispatcher.SendImage(picture)
 	if err != nil {
 		panic(err)
@@ -66,11 +69,15 @@ func (dp *Dispatcher) sendTwitter(message bytes.Buffer, picture string) {
 		panic(err)
 	}
 
+	time.Sleep(5 * time.Second)
+
 	for i := 1; i < len(msg); i++ {
 		id, err = dp.twitterDispacher.ReplyMessage(msg[i], id)
 		if err != nil {
 			panic(err)
 		}
+
+		time.Sleep(5 * time.Second)
 	}
 }
 

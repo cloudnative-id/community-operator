@@ -6,19 +6,19 @@ operator:
   # pullPolicy for operator image
   pullPolicy: "Always"
   # number of replica for deployment
-  replica: 3
+  replica: 1
 
 telegram:
   # set telegram bot is enabled or not
-  enabled: true
+  enabled: "true"
   # fill with your group chat_id
-  chatid: "-0101234"
+  chatid: "asasasa"
   # fill with your bot token
-  token: "123456789:asd43gpPasd1asdasdbdzwelolqthaha-weqMy"
+  token: "asdasdasdas"
 
 twitter:
   # set twitter bot is enabled or not
-  enabled: true
+  enabled: "false"
   # fill with your API_KEY
   api_key: "-0101234"
   # fill with your API_SECRET_KEY

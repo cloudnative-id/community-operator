@@ -15,10 +15,10 @@ helm install ./charts --name community-operator
 | operator.tag | Tag for image community-operator | 0.0.4 |
 | operator.pullPolicy | pullPolicy | Always |
 | operator.replica | number of replica | 3 |
-| telegram.enabled | Telegram enabled | true |
+| telegram.enabled | Telegram enabled | "true" |
 | telegram.chatid | Telegram chatid | |
 | telegram.token | Telegram bot token | |
-| twitter.enabled | Telegram enabled | true |
+| twitter.enabled | Telegram enabled | "true" |
 | twitter.api_key | Twitter API key | |
 | twitter.api_secret_key | Twitter API secret key | |
 | twitter.access_token | Twitter access token | |
