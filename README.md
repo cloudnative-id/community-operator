@@ -83,3 +83,4 @@ This is the community list that used community-operator
 - Golang Indonesia (weekly)
 - DevOps Indonesia (weekly)
 - NodeJS Indonesia (weekly)
+- JavaScript Indonesia (weekly)
