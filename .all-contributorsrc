@@ -1,13 +1,25 @@
 {
-    "files": ["README.md"],
-    "commit": false,
-    "imageSize": 100,
-    "contributorsSortAlphabetically": false,
-    "contributorsPerLine": 7,
-    "projectName": "community-operator",
-    "projectOwner": "cloudnative-id",
-    "repoType": "github",
-    "repoHost": "https://github.com",
-    "skipCi": true,
-    "contributors": []
+  "files": [
+    "README.md"
+  ],
+  "commit": false,
+  "imageSize": 100,
+  "contributorsSortAlphabetically": false,
+  "contributorsPerLine": 7,
+  "projectName": "community-operator",
+  "projectOwner": "cloudnative-id",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true,
+  "contributors": [
+    {
+      "login": "zufardhiyaulhaq",
+      "name": "Zufar Dhiyaulhaq",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11990726?v=4",
+      "profile": "http://zufardhiyaulhaq.com",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
 }
