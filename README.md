@@ -3,64 +3,14 @@ The Community Operator provides Kubernetes native deployment and management of y
 
 Community-operator currently watch CRDs on the same namespace as the community-operator deployed.
 
-### Feature
-#### API
-- [x] weekly API & controller
-- [x] announcement API & controller
-- [x] meetup API & controller
+## Feature
+- **Kubernetes Object based**
+- **Support Weekly, Announcement, and Meetup notification**
+- **Minimal configuration**
 
-#### Dispatcher
-- [x] telegram dispatcher
-- [ ] support for multiple telegram dispatcher
-- [x] twitter dispatcher
-- [ ] support for multiple twitter dispatcher
-- [ ] facebook dispatcher
-- [ ] support for multiple facebook dispatcher
+## Installation
 
-#### Installation
-- [x] helm chart
-
-#### Other
-- [ ] support multi namespace CRDs
-
-### Developing community-operator
-This operator build based on [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/). To build this operator, you need [operator-sdk](https://sdk.operatorframework.io/docs/install-operator-sdk/).
-
-#### Running community-operator
-- export variable need for community-operator
-```
-export TELEGRAM_ENABLED="true"
-export TELEGRAM_TOKEN=xxx
-export TELEGRAM_CHATID=yyy
-export TWITTER_ENABLED="true"
-export TWITTER_API_KEY=xxx
-export TWITTER_API_SECRET_KEY=yyy
-export TWITTER_ACCESS_TOKEN=xxx
-export TWITTER_ACCESS_TOKEN_SECRET=yyy
-```
-- deploy CRDs
-```
-kubectl apply -f deploy/crds/community.io_weeklies_crd.yaml
-kubectl apply -f deploy/crds/community.io_meetups_crd.yaml
-kubectl apply -f deploy/crds/community.io_announcements_crd.yaml
-```
-- run community-operator locally
-```
-operator-sdk run local
-```
-- deploy some example
-```
-kubectl apply -f examples/weekly/example.yaml
-kubectl apply -f examples/meetup/example.yaml
-```
-
-#### Building community-operator
-To build community-operator image, you can use community-operator from root of the project
-```
-operator-sdk build cloudnativeid/community-operator:0.0.x
-```
-
-#### Installing community-operator via helm
+### Helm
 Please read README.md in charts folder for more information.
 ```
 helm install ./charts --name-template community-operator --set-string telegram.chatid="xx" --set-string telegram.token="yy"
@@ -76,11 +26,19 @@ to upgrade
 helm upgrade community-operator ./charts --set-string telegram.chatid="xx" --set-string telegram.token="yy"
 ```
 
-#### Community list
+## Users
 This is the community list that used community-operator
-- Kubernetes & Cloud Native Indonesia (full implementation)
-- Ruby Indonesia (weekly)
-- Golang Indonesia (weekly)
-- DevOps Indonesia (weekly)
-- NodeJS Indonesia (weekly)
-- JavaScript Indonesia (weekly)
+- Kubernetes & Cloud Native Indonesia 
+- Ruby Indonesia
+- Golang Indonesia
+- DevOps Indonesia
+- NodeJS Indonesia
+- JavaScript Indonesia
+- OpenStack Indonesia
+- Open Networking Indonesia
+
+## Changes
+For changes, see the [CHANGELOG.md](CHANGELOG.md).
+
+## License
+This program is free software: you can redistribute it and/or modify it under the terms of the [MIT license](LICENSE)

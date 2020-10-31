@@ -1,0 +1,13 @@
+{
+    "files": ["README.md"],
+    "commit": false,
+    "imageSize": 100,
+    "contributorsSortAlphabetically": false,
+    "contributorsPerLine": 7,
+    "projectName": "community-operator",
+    "projectOwner": "cloudnative-id",
+    "repoType": "github",
+    "repoHost": "https://github.com",
+    "skipCi": true,
+    "contributors": []
+}
