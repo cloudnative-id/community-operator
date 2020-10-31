@@ -56,6 +56,8 @@ This is the community list that used community-operator
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
+Contributions of any kind welcome, please check [CONTRIBUTING.md](https://github.com/cloudnative-id/community-operator/blob/master/.github/CONTRIBUTING.md)!
+
 ## Changes
 For changes, see the [CHANGELOG.md](CHANGELOG.md).
 
