@@ -6,9 +6,9 @@
 
 #### Dispatcher
 - [x] telegram dispatcher
-- [ ] support for multiple telegram dispatcher
+- [x] support for multiple telegram dispatcher
 - [x] twitter dispatcher
-- [ ] support for multiple twitter dispatcher
+- [x] support for multiple twitter dispatcher
 - [ ] facebook dispatcher
 - [ ] support for multiple facebook dispatcher
 

@@ -2,7 +2,6 @@ package dispatcher
 
 import (
 	"bytes"
-	"os"
 	"strconv"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -16,20 +15,20 @@ type TelegramDispatcher struct {
 	pic    tgbotapi.PhotoConfig
 }
 
-func (t *TelegramDispatcher) getCredential() {
+func (t *TelegramDispatcher) setCredential(token string, chatID string) {
 	var err error
 
-	t.token = os.Getenv("TELEGRAM_TOKEN")
-	t.chatID, err = strconv.Atoi(os.Getenv("TELEGRAM_CHATID"))
+	t.token = token
+	t.chatID, err = strconv.Atoi(chatID)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func (t *TelegramDispatcher) Start() {
+func (t *TelegramDispatcher) Start(token string, chatID string) {
 	var err error
 
-	t.getCredential()
+	t.setCredential(token, chatID)
 	t.bot, err = tgbotapi.NewBotAPI(t.token)
 	if err != nil {
 		panic(err)

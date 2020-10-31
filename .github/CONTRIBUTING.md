@@ -14,8 +14,8 @@ Fork and clone **[community-operator](https://github.com/cloudnative-id/communit
 
 - Setup your environment
 ```
-cp .env-example .env
-set -o allexport; source .env; set +o allexport
+sudo mkdir /etc/community-operator/
+sudo cp .env /etc/community-operator/community-operator-config.yaml
 ```
 
 - deploy CRDs
@@ -37,6 +37,10 @@ kubectl apply -f examples/meetup/example.yaml
 kubectl apply -f examples/announcement/example.yaml
 ```
 
+- Build community-operator image
+```
+operator-sdk build account/repository:tag
+```
 
 ### Submit a pull request
 As you are ready with your code contribution, push your branch to your `community-operator` fork and open a pull request against the **master** branch.

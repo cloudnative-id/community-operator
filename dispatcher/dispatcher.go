@@ -3,47 +3,37 @@ package dispatcher
 import (
 	"bytes"
 	"fmt"
-	"os"
+	"io/ioutil"
 	"sort"
-	"strconv"
 	"strings"
 	"text/template"
 	"time"
 
+	"github.com/cloudnative-id/community-operator/config"
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
+	"sigs.k8s.io/yaml"
 )
 
 type Dispatcher struct {
-	telegramEnabled    bool
-	twitterEnabled     bool
+	config             config.Config
 	telegramDispatcher TelegramDispatcher
 	twitterDispacher   TwitterDispatcher
 }
 
-func (dp *Dispatcher) getCredential() {
-	var err error
-
-	dp.telegramEnabled, err = strconv.ParseBool(os.Getenv("TELEGRAM_ENABLED"))
+func (dp *Dispatcher) getConfig() {
+	configFile, err := ioutil.ReadFile("/etc/community-operator/community-operator-config.yaml")
 	if err != nil {
 		panic(err)
 	}
 
-	dp.twitterEnabled, err = strconv.ParseBool(os.Getenv("TWITTER_ENABLED"))
+	err = yaml.Unmarshal(configFile, &dp.config)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func (dp *Dispatcher) Start() {
-	dp.getCredential()
-
-	if dp.telegramEnabled {
-		dp.telegramDispatcher.Start()
-	}
-
-	if dp.twitterEnabled {
-		dp.twitterDispacher.Start()
-	}
+	dp.getConfig()
 }
 
 func (dp *Dispatcher) sendTelegram(message bytes.Buffer, picture string) {
@@ -81,7 +71,7 @@ func (dp *Dispatcher) sendTwitter(message bytes.Buffer, picture string) {
 	}
 }
 
-func format(dispatcher string, data interface{}) bytes.Buffer {
+func populateTemplate(dispatcher string, data interface{}) bytes.Buffer {
 	var tmpl string
 	var output bytes.Buffer
 
@@ -108,45 +98,65 @@ func format(dispatcher string, data interface{}) bytes.Buffer {
 }
 
 func (dp *Dispatcher) SendWeekly(weeklyData communityv1alpha1.WeeklySpec) {
-
 	sort.Slice(weeklyData.Articles, func(i, j int) bool {
 		return weeklyData.Articles[i].Type < weeklyData.Articles[j].Type
 	})
 
-	telegramData := format("telegram", weeklyData)
-	twitterData := format("twitter", weeklyData)
+	if dp.config.Telegram.Enabled {
+		for _, config := range dp.config.Telegram.Group {
+			dp.telegramDispatcher.Start(config.Token, config.ChatID)
 
-	if dp.telegramEnabled {
-		dp.sendTelegram(telegramData, weeklyData.Image)
+			telegramData := populateTemplate("telegram", weeklyData)
+			dp.sendTelegram(telegramData, weeklyData.Image)
+		}
 	}
 
-	if dp.twitterEnabled {
-		dp.sendTwitter(twitterData, weeklyData.Image)
+	if dp.config.Twitter.Enabled {
+		for _, config := range dp.config.Twitter.Account {
+			dp.twitterDispacher.Start(config.APIKey, config.APISecretKey, config.AccessToken, config.AccessTokenSecret)
+
+			twitterData := populateTemplate("twitter", weeklyData)
+			dp.sendTwitter(twitterData, weeklyData.Image)
+		}
 	}
 }
 
 func (dp *Dispatcher) SendMeetup(meetupData communityv1alpha1.MeetupSpec) {
-	telegramData := format("telegram", meetupData)
-	twitterData := format("twitter", meetupData)
+	if dp.config.Telegram.Enabled {
+		for _, config := range dp.config.Telegram.Group {
+			dp.telegramDispatcher.Start(config.Token, config.ChatID)
 
-	if dp.telegramEnabled {
-		dp.sendTelegram(telegramData, meetupData.Image)
+			telegramData := populateTemplate("telegram", meetupData)
+			dp.sendTelegram(telegramData, meetupData.Image)
+		}
 	}
 
-	if dp.twitterEnabled {
-		dp.sendTwitter(twitterData, meetupData.Image)
+	if dp.config.Twitter.Enabled {
+		for _, config := range dp.config.Twitter.Account {
+			dp.twitterDispacher.Start(config.APIKey, config.APISecretKey, config.AccessToken, config.AccessTokenSecret)
+
+			twitterData := populateTemplate("twitter", meetupData)
+			dp.sendTwitter(twitterData, meetupData.Image)
+		}
 	}
 }
 
 func (dp *Dispatcher) SendAnnouncement(announcementData communityv1alpha1.AnnouncementSpec) {
-	telegramData := format("telegram", announcementData)
-	twitterData := format("twitter", announcementData)
+	if dp.config.Telegram.Enabled {
+		for _, config := range dp.config.Telegram.Group {
+			dp.telegramDispatcher.Start(config.Token, config.ChatID)
 
-	if dp.telegramEnabled {
-		dp.sendTelegram(telegramData, announcementData.Image)
+			telegramData := populateTemplate("telegram", announcementData)
+			dp.sendTelegram(telegramData, announcementData.Image)
+		}
 	}
 
-	if dp.twitterEnabled {
-		dp.sendTwitter(twitterData, announcementData.Image)
+	if dp.config.Twitter.Enabled {
+		for _, config := range dp.config.Twitter.Account {
+			dp.twitterDispacher.Start(config.APIKey, config.APISecretKey, config.AccessToken, config.AccessTokenSecret)
+
+			twitterData := populateTemplate("twitter", announcementData)
+			dp.sendTwitter(twitterData, announcementData.Image)
+		}
 	}
 }
