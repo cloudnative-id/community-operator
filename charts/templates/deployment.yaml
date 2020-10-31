@@ -19,17 +19,13 @@ spec:
         image: {{ .Values.operator.image }}:{{ .Values.operator.tag }}
         imagePullPolicy: {{ .Values.operator.pullPolicy }}
         env:
-          - name: WATCH_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
           - name: OPERATOR_NAME
             value: {{ .Chart.Name }}
-        envFrom:
-        - secretRef:
-            name: {{ .Chart.Name }}-secret
-
+        volumeMounts:
+        - name: {{ .Chart.Name }}-secret
+          mountPath: "/etc/community-operator/"
+      volumes:
+      - name: {{ .Chart.Name }}-secret
+        secret:
+          secretName: {{ .Chart.Name }}-secret
+          defaultMode: 0400
