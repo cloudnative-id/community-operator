@@ -10,6 +10,7 @@ require (
 	github.com/gomodule/oauth1 v0.0.0-20181215000758-9a59ed3b0a84
 	github.com/norwoodj/helm-docs v1.4.0 // indirect
 	github.com/operator-framework/operator-sdk v0.18.1
+	github.com/sirupsen/logrus v1.5.0
 	github.com/spf13/pflag v1.0.5
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/zufardhiyaulhaq/ngrok-operator v0.0.0-20201031134108-a79211c21da1 // indirect

@@ -2,41 +2,49 @@ package dispatcher
 
 import (
 	"bytes"
+	"fmt"
 	"strconv"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	log "github.com/sirupsen/logrus"
 )
 
 type TelegramDispatcher struct {
-	token  string
-	chatID int
-	bot    *tgbotapi.BotAPI
-	msg    tgbotapi.MessageConfig
-	pic    tgbotapi.PhotoConfig
+	token      string
+	credential string
+	bot        *tgbotapi.BotAPI
+	msg        tgbotapi.MessageConfig
+	pic        tgbotapi.PhotoConfig
 }
 
-func (t *TelegramDispatcher) setCredential(token string, chatID string) {
-	var err error
-
+func (t *TelegramDispatcher) setCredential(token string, credential string) {
 	t.token = token
-	t.chatID, err = strconv.Atoi(chatID)
-	if err != nil {
-		panic(err)
-	}
+	t.credential = credential
 }
 
-func (t *TelegramDispatcher) Start(token string, chatID string) {
+func (t *TelegramDispatcher) Start(token string, credential string) {
 	var err error
 
-	t.setCredential(token, chatID)
+	t.setCredential(token, credential)
 	t.bot, err = tgbotapi.NewBotAPI(t.token)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
 
-func (t *TelegramDispatcher) SendMessage(output bytes.Buffer) (int, error) {
-	t.msg = tgbotapi.NewMessage(int64(t.chatID), output.String())
+func (t *TelegramDispatcher) SendMessage(output bytes.Buffer, chatType string) (int, error) {
+	switch chatType {
+	case "group":
+		chatID, err := strconv.Atoi(t.credential)
+		if err != nil {
+			log.Fatal(err)
+		}
+		t.msg = tgbotapi.NewMessage(int64(chatID), output.String())
+	case "channel":
+		fmt.Println(t.credential)
+		t.msg = tgbotapi.NewMessageToChannel(t.credential, output.String())
+	}
+
 	t.msg.ParseMode = "markdown"
 	t.msg.DisableWebPagePreview = true
 
@@ -44,8 +52,23 @@ func (t *TelegramDispatcher) SendMessage(output bytes.Buffer) (int, error) {
 	return msg.MessageID, err
 }
 
-func (t *TelegramDispatcher) SendImage(url string) (int, error) {
-	t.pic = tgbotapi.NewPhotoShare(int64(t.chatID), url)
+func (t *TelegramDispatcher) SendImage(url string, chatType string) (int, error) {
+	switch chatType {
+	case "group":
+		chatID, err := strconv.Atoi(t.credential)
+		if err != nil {
+			log.Fatal(err)
+		}
+		t.pic = tgbotapi.NewPhotoShare(int64(chatID), url)
+	case "channel":
+		t.pic = tgbotapi.PhotoConfig{
+			BaseFile: tgbotapi.BaseFile{
+				BaseChat:    tgbotapi.BaseChat{ChannelUsername: t.credential},
+				FileID:      url,
+				UseExisting: true,
+			},
+		}
+	}
 
 	msg, err := t.bot.Send(t.pic)
 	return msg.MessageID, err
