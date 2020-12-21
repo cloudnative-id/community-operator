@@ -2,8 +2,8 @@
 apiVersion: v1
 name: community-operator
 type: application
-version: 0.0.5
-appVersion: 0.0.5
+version: 0.0.6
+appVersion: 0.0.6
 description: community-operator for managing community lifecycle
 home: https://github.com/cloudnative-id/community-operator
 keywords:

@@ -3,6 +3,7 @@ package dispatcher
 import (
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
+	log "github.com/sirupsen/logrus"
 )
 
 type TwitterDispatcher struct {
@@ -18,7 +19,7 @@ func (t *TwitterDispatcher) getCredential(apiKey string, apiSecretKey string, ac
 	t.token = oauth1.NewToken(accessToken, accessTokenSecret)
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
 

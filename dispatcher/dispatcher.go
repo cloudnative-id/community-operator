@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"sort"
 	"strings"
 	"text/template"
@@ -11,6 +12,7 @@ import (
 
 	"github.com/cloudnative-id/community-operator/config"
 	communityv1alpha1 "github.com/cloudnative-id/community-operator/pkg/apis/community/v1alpha1"
+	log "github.com/sirupsen/logrus"
 	"sigs.k8s.io/yaml"
 )
 
@@ -23,30 +25,34 @@ type Dispatcher struct {
 func (dp *Dispatcher) getConfig() {
 	configFile, err := ioutil.ReadFile("/etc/community-operator/community-operator-config.yaml")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	err = yaml.Unmarshal(configFile, &dp.config)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
 
 func (dp *Dispatcher) Start() {
+	log.SetFormatter(&log.JSONFormatter{})
+	log.SetOutput(os.Stdout)
+
 	dp.getConfig()
 }
 
-func (dp *Dispatcher) sendTelegram(message bytes.Buffer, picture string) {
-	_, err := dp.telegramDispatcher.SendMessage(message)
+func (dp *Dispatcher) sendTelegram(message bytes.Buffer, picture string, chatType string) {
+	_, err := dp.telegramDispatcher.SendMessage(message, chatType)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	time.Sleep(10 * time.Second)
 
-	_, err = dp.telegramDispatcher.SendImage(picture)
+	_, err = dp.telegramDispatcher.SendImage(picture, chatType)
 	if err != nil {
-		panic(err)
+		log.Error(err)
+		log.Error("Cannot send image, skipping")
 	}
 }
 
@@ -56,7 +62,7 @@ func (dp *Dispatcher) sendTwitter(message bytes.Buffer, picture string) {
 
 	id, err := dp.twitterDispacher.SendMessage(msg[0])
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	time.Sleep(5 * time.Second)
@@ -64,7 +70,7 @@ func (dp *Dispatcher) sendTwitter(message bytes.Buffer, picture string) {
 	for i := 1; i < len(msg); i++ {
 		id, err = dp.twitterDispacher.ReplyMessage(msg[i], id)
 		if err != nil {
-			panic(err)
+			log.Fatal(err)
 		}
 
 		time.Sleep(5 * time.Second)
@@ -86,12 +92,12 @@ func populateTemplate(dispatcher string, data interface{}) bytes.Buffer {
 
 	tpl, err := template.ParseFiles(tmpl)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	err = tpl.Execute(&output, data)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	return output
@@ -107,7 +113,14 @@ func (dp *Dispatcher) SendWeekly(weeklyData communityv1alpha1.WeeklySpec) {
 			dp.telegramDispatcher.Start(config.Token, config.ChatID)
 
 			telegramData := populateTemplate("telegram", weeklyData)
-			dp.sendTelegram(telegramData, weeklyData.Image)
+			dp.sendTelegram(telegramData, weeklyData.Image, "group")
+		}
+
+		for _, config := range dp.config.Telegram.Channel {
+			dp.telegramDispatcher.Start(config.Token, config.Username)
+
+			telegramData := populateTemplate("telegram", weeklyData)
+			dp.sendTelegram(telegramData, weeklyData.Image, "channel")
 		}
 	}
 
@@ -127,7 +140,14 @@ func (dp *Dispatcher) SendMeetup(meetupData communityv1alpha1.MeetupSpec) {
 			dp.telegramDispatcher.Start(config.Token, config.ChatID)
 
 			telegramData := populateTemplate("telegram", meetupData)
-			dp.sendTelegram(telegramData, meetupData.Image)
+			dp.sendTelegram(telegramData, meetupData.Image, "group")
+		}
+
+		for _, config := range dp.config.Telegram.Channel {
+			dp.telegramDispatcher.Start(config.Token, config.Username)
+
+			telegramData := populateTemplate("telegram", meetupData)
+			dp.sendTelegram(telegramData, meetupData.Image, "channel")
 		}
 	}
 
@@ -147,7 +167,14 @@ func (dp *Dispatcher) SendAnnouncement(announcementData communityv1alpha1.Announ
 			dp.telegramDispatcher.Start(config.Token, config.ChatID)
 
 			telegramData := populateTemplate("telegram", announcementData)
-			dp.sendTelegram(telegramData, announcementData.Image)
+			dp.sendTelegram(telegramData, announcementData.Image, "group")
+		}
+
+		for _, config := range dp.config.Telegram.Channel {
+			dp.telegramDispatcher.Start(config.Token, config.Username)
+
+			telegramData := populateTemplate("telegram", announcementData)
+			dp.sendTelegram(telegramData, announcementData.Image, "channel")
 		}
 	}
 
