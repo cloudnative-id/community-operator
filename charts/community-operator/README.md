@@ -4,7 +4,7 @@ Helm chart for community-operators
 ### Installing the charts
 From root directory of community-operator. Please edit the values.yaml inside charts before applying.
 ```
-helm install ./charts --name community-operator
+helm install ./charts/community-operator --name community-operator
 ```
 
 ### Configuration
@@ -36,5 +36,5 @@ helm install ./charts --name community-operator
 
 Specify each parameter using the `--set key=value[,key=value]` argument to helm install. For example:
 ```
-helm install ./charts --name-template community-operator --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
+helm install ./charts/community-operator --name-template community-operator --set-string telegram.chatid="-1234556" --set-string telegram.token="12354:asdaADASFD"
 ```
