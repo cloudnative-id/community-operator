@@ -16,7 +16,8 @@ Community-operator currently watch CRDs on the same namespace as the community-o
 ### Helm
 Please read README.md in charts folder for more information.
 ```
-helm install ./charts/community-operator --name-template community-operator --set-string telegram.chatid="xx" --set-string telegram.token="yy"
+helm repo add zufardhiyaulhaq https://charts.zufardhiyaulhaq.com/
+helm install zufardhiyaulhaq/community-operator --name-template community-operator
 ```
 
 to insatall without crds
@@ -26,7 +27,7 @@ to insatall without crds
 
 to upgrade
 ```
-helm upgrade community-operator ./charts/community-operator --set-string telegram.chatid="xx" --set-string telegram.token="yy"
+helm upgrade community-operator zufardhiyaulhaq/community-operator --set-string telegram.chatid="xx" --set-string telegram.token="yy"
 ```
 
 ## Users
