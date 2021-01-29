@@ -11,10 +11,10 @@ helm install zufardhiyaulhaq/community-operator --name-template community-operat
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| config.channel[0].token | string | `"bot_token"` |  |
-| config.channel[0].username | string | `"username_channel_one"` |  |
-| config.channel[1].token | string | `"bot_token"` |  |
-| config.channel[1].username | string | `"username_channel_two"` |  |
+| config.telegram.channel[0].token | string | `"bot_token"` |  |
+| config.telegram.channel[0].username | string | `"username_channel_one"` |  |
+| config.telegram.channel[1].token | string | `"bot_token"` |  |
+| config.telegram.channel[1].username | string | `"username_channel_two"` |  |
 | config.telegram.enabled | bool | `true` |  |
 | config.telegram.group[0].chatId | string | `"group_one_chatid"` |  |
 | config.telegram.group[0].token | string | `"bot_token"` |  |
