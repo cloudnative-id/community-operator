@@ -31,9 +31,9 @@ spec:
             value: {{ .Chart.Name }}
         volumeMounts:
         - name: {{ .Chart.Name }}-secret
-          mountPath: "/etc/community-operator/"
+          mountPath: "/etc/community-operator/config/"
       volumes:
       - name: {{ .Chart.Name }}-secret
         secret:
           secretName: {{ .Chart.Name }}-secret
-          defaultMode: 0400
+          defaultMode: 0740

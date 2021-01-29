@@ -23,7 +23,7 @@ type Dispatcher struct {
 }
 
 func (dp *Dispatcher) getConfig() {
-	configFile, err := ioutil.ReadFile("/etc/community-operator/community-operator-config.yaml")
+	configFile, err := ioutil.ReadFile("/etc/community-operator/config/community-operator-config.yaml")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,11 +83,11 @@ func populateTemplate(dispatcher string, data interface{}) bytes.Buffer {
 
 	switch data.(type) {
 	case communityv1alpha1.WeeklySpec:
-		tmpl = fmt.Sprintf("templates/%s/Weekly.tmpl", dispatcher)
+		tmpl = fmt.Sprintf("/etc/community-operator/templates/%s/Weekly.tmpl", dispatcher)
 	case communityv1alpha1.MeetupSpec:
-		tmpl = fmt.Sprintf("templates/%s/Meetup.tmpl", dispatcher)
+		tmpl = fmt.Sprintf("/etc/community-operator/templates/%s/Meetup.tmpl", dispatcher)
 	case communityv1alpha1.AnnouncementSpec:
-		tmpl = fmt.Sprintf("templates/%s/Announcement.tmpl", dispatcher)
+		tmpl = fmt.Sprintf("/etc/community-operator/templates/%s/Announcement.tmpl", dispatcher)
 	}
 
 	tpl, err := template.ParseFiles(tmpl)
