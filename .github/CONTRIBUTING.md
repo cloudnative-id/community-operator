@@ -14,8 +14,9 @@ Fork and clone **[community-operator](https://github.com/cloudnative-id/communit
 
 - Setup your environment
 ```
-sudo mkdir /etc/community-operator/
-sudo cp .env /etc/community-operator/community-operator-config.yaml
+sudo mkdir /etc/community-operator/config/
+sudo cp .env /etc/community-operator/config/community-operator-config.yaml
+sudo cp -R templates /etc/community-operator/
 ```
 
 - deploy CRDs

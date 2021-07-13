@@ -1,3 +1,5 @@
+# please note that this will generate markdown format in telegram
+# please escape the markdown symbol like # and * with \
 apiVersion: community.io/v1alpha1
 kind: Meetup
 metadata:
